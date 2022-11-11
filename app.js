@@ -108,7 +108,7 @@ const app = Vue.createApp({
     window.sampler = new Tone.Sampler({
       urls,
       release: 1,
-      baseUrl: ".",
+      baseUrl: "/ear-trainer/",
     }).toDestination();
 
 
