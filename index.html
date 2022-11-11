@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ear Trainer</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js" integrity="sha512-jduERlz7En1IUZR54bqzpNI64AbffZWR//KJgF71SJ8D8/liKFZ+s1RxmUmB+bhCnIfzebdZsULwOrbVB5f3nQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="/nexus.js"></script>
+  </head>
+  <body>
+    
+    <div id='app'>
+      
+      <main>
+
+        <div v-if="!started">
+          <button @click="startQuestion">Start</button>
+          <p>Make sure to enable audio before starting</p>
+        </div>
+
+        <div v-if="started && !showResults" class="question">
+          <p>{{ challenge.question }}</p>
+          <button @click="playAgain">Play again</button>
+
+          <div v-if="challenge.type === 'options'">
+            <button v-for="option in challenge.options" @click="checkAnswer(option)">
+              {{ option }}
+            </button>
+          </div>
+
+          <div v-if="challenge.type === 'input'">
+            <input type="number" v-model="answer">
+            <button @click="checkAnswer(answer)">Submit</button>
+          </div>
+
+        </div>
+
+        <div v-if="started && showResults" class="results">
+          <p v-if="correct" style="color: rgb(50, 177, 0);">Correct!</p>
+          <p v-else="!correct" style="color:rgb(255, 88, 88);">Incorrect!</p>
+          <button @click="startQuestion">Next</button>
+        </div>
+
+        <div :class="{ disabled: !showResults }" id="piano"></div>
+
+      </main>
+
+
+    </div>
+    
+    <script src="app.js"></script>
+  </body>
+</html>
