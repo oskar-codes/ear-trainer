@@ -30,7 +30,6 @@ const app = Vue.createApp({
         that.playNote(this.second);
       },
       checkAnswer(answer) {
-        console.log(this.answer, answer);
         return this.answer === answer;
       },
       end(that) {
@@ -84,6 +83,22 @@ const app = Vue.createApp({
       end(that) {
         that.setKeys([this.first, this.second])
       }
+    },{
+      question: 'Which note is this?',
+      type: 'note',
+      setup(that) {
+        this.note = that.randomNote();
+        this.answer = that.notes[this.note % 12];
+      },
+      async play(that) {
+        that.playNote(this.note);
+      },
+      checkAnswer(answer) {
+        return this.answer === answer;
+      },
+      end(that) {
+        that.setKeys([this.note])
+      }
     }]
   })),
   async mounted() {
@@ -108,7 +123,7 @@ const app = Vue.createApp({
     window.sampler = new Tone.Sampler({
       urls,
       release: 1,
-      baseUrl: "/ear-trainer/",
+      baseUrl: "/",
     }).toDestination();
 
 
@@ -121,7 +136,7 @@ const app = Vue.createApp({
   methods: {
     async startQuestion() {
       const selected = this.challenges[Math.floor(Math.random() * this.challenges.length)];
-      // const selected = this.challenges[2];
+      // const selected = this.challenges[3];
       this.challenge = selected;
       this.challenge.setup(this);
       this.started = true;
