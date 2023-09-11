@@ -117,7 +117,7 @@ const app = Vue.createApp({
 
     const urls = Object.fromEntries(
       new Array(7).fill()
-        .map((e,i) => this.notes.map(note => [note + (i + 1), `./samples/${note.replace('#', 's') + (i + 1)}.mp3`])).flat()
+        .map((e,i) => this.notes.map(note => [note + (i + 1), `./ear-trainer/samples/${note.replace('#', 's') + (i + 1)}.mp3`])).flat()
     );
 
     window.sampler = new Tone.Sampler({
